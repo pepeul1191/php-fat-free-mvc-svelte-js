@@ -2,16 +2,18 @@
 
 namespace App\Controllers;
 
-class HomeController 
+use App\Controllers\BaseController;
+
+class HomeController extends BaseController
 {
   function __construct()
   {
-    // pass
+    parent::__construct();
   }
 
   function beforeroute($f3) {
-    echo $path = $f3->get('PATH');
-    echo $method = $f3->get('VERB');
+    parent::beforeroute($f3);
+    echo 'beforeHomeFilter<br>';
   }
 
   function index() 
