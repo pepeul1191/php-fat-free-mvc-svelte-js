@@ -1,0 +1,20 @@
+{
+  "name": "pepe/slim4pp",
+  "description": "Slim PHP by Pepe",
+  "authors": [
+    {
+      "name": "Pepe Valdivia",
+      "email": "pepe.valdivia.caballero@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2 || ^8.0",
+    "bcosca/fatfree-core": "^3.7"
+
+  },
+  "autoload": {
+  },
+  "scripts": {
+    "dump": "composer dump-autoload -o"
+  }
+}
