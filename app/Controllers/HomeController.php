@@ -16,12 +16,16 @@ class HomeController extends BaseController
     echo 'beforeHomeFilter<br>';
   }
 
-  function index() 
+  function index($f3) 
   {
-    echo 'I cannot object to an object';
+    $f3->mset(array(
+      'title' => 'Inicio',
+      'href' => '/login',
+    ));
+    echo $this->render('home/index', $locals);
   }
 
-  function specialisms()
+  function specialisms($f3)
   {
     parent::loadHelper('ORM');
     // data

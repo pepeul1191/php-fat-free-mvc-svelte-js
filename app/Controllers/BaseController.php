@@ -14,10 +14,16 @@ abstract class BaseController
 
   function loadHelper($helper)
   {
-    include_once FCPATH . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR  . 'Helpers' . DIRECTORY_SEPARATOR. $helper . 'Helper.php';
+    include_once BASE_PATH . '/app/Helpers/' . helper . 'Helper.php';
   }
 
   function beforeroute($f3) {
     BeforeAllFilter::before($f3);
+  }
+
+  function render($template)
+  {
+    $view = new \View;
+    echo $view->render('app/Views/' . $template . '.php');
   }
 }
