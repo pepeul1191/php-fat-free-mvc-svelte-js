@@ -21,6 +21,8 @@ class HomeController extends BaseController
     $f3->mset(array(
       'title' => 'Inicio',
       'href' => '/login',
+      'stylesheets' => array('build/bundle.app',),
+      'javascripts' => array('build/bundle.app',),
     ));
     echo $this->render('home/index', $locals);
   }

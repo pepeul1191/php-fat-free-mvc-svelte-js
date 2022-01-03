@@ -14,7 +14,7 @@ abstract class BaseController
 
   function loadHelper($helper)
   {
-    include_once BASE_PATH . '/app/Helpers/' . helper . 'Helper.php';
+    include_once BASE_PATH . '/app/Helpers/' . $helper . 'Helper.php';
   }
 
   function beforeroute($f3) {
@@ -23,6 +23,7 @@ abstract class BaseController
 
   function render($template)
   {
+    $this->loadHelper('View');
     $view = new \View;
     echo $view->render('app/Views/' . $template . '.php');
   }
