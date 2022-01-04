@@ -7,6 +7,7 @@ class RandomLib
   private static $initialized = false;
   private static $SNChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   private static $SChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  private static $LNhars = 'abcdefghijklmnopqrstuvwxyz0123456789';
   private static $NChars = '0123456789';
 
   private static function initialize()
@@ -23,6 +24,17 @@ class RandomLib
     $randomString = '';
     for ($i = 0; $i < $length; $i++) {
       $randomString .= self::$SNChars[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+  }
+  
+  public static function lowerStringNumber($length = 10)
+  {
+    self::initialize();
+    $charactersLength = strlen(self::$LNhars);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+      $randomString .= self::$LNhars[rand(0, $charactersLength - 1)];
     }
     return $randomString;
   }

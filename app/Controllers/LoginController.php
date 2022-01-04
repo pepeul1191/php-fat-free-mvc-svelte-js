@@ -48,8 +48,8 @@ class LoginController extends BaseController
     $user = $payload['user'];
     $password = $payload['password'];
     if($user == 'admin' && $password == '123'){
-      $_SESSION['csrfKey'] = \App\Libraries\RandomLib::stringNumber(20);
-      $_SESSION['csrfValue'] = \App\Libraries\RandomLib::stringNumber(30);
+      $_SESSION['csrfKey'] = \App\Libraries\RandomLib::lowerStringNumber(20);
+      $_SESSION['csrfValue'] = \App\Libraries\RandomLib::lowerStringNumber(30);
       $_SESSION['status'] = 'active';
       $_SESSION['user'] = $user;
       $_SESSION['name'] = 'Pepe Valdivia';

@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Filters\SessionTrueApiFilter;
+use App\Filters\CsrfApiFilter;
 
 class SpecialismController extends BaseController
 {
@@ -14,6 +16,8 @@ class SpecialismController extends BaseController
   function beforeroute($f3) 
   {
     parent::beforeroute($f3);
+    SessionTrueApiFilter::before($f3);
+    CsrfApiFilter::before($f3);
   }
 
   function list($f3)
