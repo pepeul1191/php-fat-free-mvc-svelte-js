@@ -60,4 +60,10 @@ class LoginController extends BaseController
       $f3->reroute($f3->get('PATH') . '?error=user-pass-mismatch');
     }
   }
+
+  function logout($f3)
+  {
+    $_SESSION = array();
+    $f3->reroute('/login');
+  }
 }
