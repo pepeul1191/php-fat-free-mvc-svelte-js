@@ -18,6 +18,7 @@ $f3->route('POST /login', '\App\Controllers\LoginController->access');
 $f3->route('GET /log-out', '\App\Controllers\LoginController->logout');
 # rest
 $f3->route('GET /specialism/list', '\App\Controllers\SpecialismController->list');
+$f3->route('POST /specialism/save', '\App\Controllers\SpecialismController->save');
 #### user
 $f3->route('GET /user', '\App\Controllers\UserController->info');
 # error handler
