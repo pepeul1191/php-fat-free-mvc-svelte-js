@@ -9,12 +9,11 @@ abstract class BaseController
   function __construct()
   {
     // pass
-    echo 'constructor padre<br>';
   }
 
   function loadHelper($helper)
   {
-    include_once BASE_PATH . '/app/Helpers/' . $helper . 'Helper.php';
+    include_once BASE_PATH . '/app/Helpers/' . $helper . '_helper.php';
   }
 
   function beforeroute($f3) {
@@ -23,7 +22,7 @@ abstract class BaseController
 
   function render($template)
   {
-    $this->loadHelper('View');
+    $this->loadHelper('view');
     $view = new \View;
     echo $view->render('app/Views/' . $template . '.php');
   }

@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 
-class HomeController extends BaseController
+class SpecialismController extends BaseController
 {
   function __construct()
   {
@@ -16,19 +16,7 @@ class HomeController extends BaseController
     parent::beforeroute($f3);
   }
 
-  function index($f3) 
-  {
-    $f3->mset(array(
-      'title' => 'Inicio',
-      'href' => '/login',
-      'stylesheets' => array('build/bundle.app',),
-      'javascripts' => array('build/bundle.app',),
-    ));
-    http_response_code(200);
-    echo $this->render('home/index', $locals);
-  }
-
-  function specialisms($f3)
+  function list($f3)
   {
     parent::loadHelper('orm');
     // data
@@ -44,6 +32,7 @@ class HomeController extends BaseController
       $resp = json_encode(['ups', $e->getMessage()]);
     }
     // resp
+    http_response_code($status);
     echo $resp;
   }
 }

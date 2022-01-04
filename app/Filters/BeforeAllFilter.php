@@ -6,7 +6,7 @@ class BeforeAllFilter
 {
   public static function before($f3, $params = null)
   {
-    echo 'beforeAllFilter<br>';
+    // TODO
   }
 
   public static function after($f3, $params = null)

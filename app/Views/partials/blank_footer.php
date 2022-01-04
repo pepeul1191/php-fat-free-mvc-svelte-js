@@ -1,5 +1,3 @@
-<h2>footer</h2>
-
-<?php echo loadJavascripts($javascripts); ?>
+<?php if(isset($javascripts)) echo loadJavascripts($javascripts); ?>
 </body>
 </html>
