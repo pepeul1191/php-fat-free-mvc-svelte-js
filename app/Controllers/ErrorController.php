@@ -77,14 +77,13 @@ class ErrorController extends BaseController
     $f3->mset(array(
       'title' => 'Error',
       'href' => '/error/access',
-      //'constants' => $this->constants,
       'number' => $data['number'],
       'session' => false,
       'message' => $data['message'],
       'description' => $data['description'],
       'icon' => $data['icon'],
       'hrefError' => $data['hrefError'],
-      'stylesheets' => stylesheetsAccess($this->staticURL),
+      'stylesheets' => stylesheetsAccess($f3->get('staticURL')),
       'javascripts' => [],
     ));
     // response

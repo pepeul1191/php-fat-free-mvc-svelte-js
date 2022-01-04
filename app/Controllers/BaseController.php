@@ -8,17 +8,7 @@ abstract class BaseController
 {
   function __construct()
   {
-    if($_ENV['FF_ENVIRONMENT'] == 'production'){
-      $this->baseURL = 'https://softweb.pe/XD';
-      $this->staticURL = 'https://softweb.pe/public/';
-      $this->csrfKey = 'demo_';
-      $this->csrfValue = '123_';
-    }else if($_ENV['FF_ENVIRONMENT'] == 'development'){
-      $this->baseURL = 'http://localhost:8080/';
-      $this->staticURL = '/public/';
-      $this->csrfKey = '_demo';
-      $this->csrfValue = '_123';
-    }
+    // PASS
   }
 
   function loadHelper($helper)

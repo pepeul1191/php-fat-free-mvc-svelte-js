@@ -45,6 +45,7 @@ class HomeController extends BaseController
       $resp = json_encode(['ups', $e->getMessage()]);
     }
     // resp
+    http_response_code($status);
     echo $resp;
   }
 }

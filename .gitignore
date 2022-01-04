@@ -130,3 +130,5 @@ composer.lock
 public/fonts
 package-lock.json
 node_modules
+logs
+tmp
