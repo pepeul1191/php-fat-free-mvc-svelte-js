@@ -2,6 +2,9 @@
 
 // views
 $f3->route('GET /', '\App\Controllers\HomeController->index');
+$f3->route('GET /login', '\App\Controllers\LoginController->index');
+$f3->route('GET /login/sign-in', '\App\Controllers\LoginController->index');
+$f3->route('GET /login/reset-password', '\App\Controllers\LoginController->index');
 // rest
 $f3->route('GET /specialism/list', '\App\Controllers\SpecialismController->list');
 // handler

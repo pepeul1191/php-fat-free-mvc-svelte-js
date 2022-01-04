@@ -22,8 +22,8 @@ class HomeController extends BaseController
     $f3->mset(array(
       'title' => 'Inicio',
       'href' => '/login',
-      'stylesheets' => stylesheetsHome($this->staticURL),
-      'javascripts' => javascriptsHome($this->staticURL),
+      'stylesheets' => stylesheetsHome($f3->get('staticURL')),
+      'javascripts' => javascriptsHome($f3->get('staticURL')),
     ));
     http_response_code(200);
     echo $this->render('home/index', $locals);
