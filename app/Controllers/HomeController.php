@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Filters\SessionTrueFilter;
 
 class HomeController extends BaseController
 {
@@ -14,6 +15,11 @@ class HomeController extends BaseController
   function beforeroute($f3) 
   {
     parent::beforeroute($f3);
+    $path = $f3->get('PATH');
+    $method = $f3->get('VERB');
+    if($path == '/'){
+      // SessionTrueFilter::before($f3);
+    }
   }
 
   function index($f3) 

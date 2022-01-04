@@ -1,6 +1,6 @@
 <?php
 
-// app
+# app
 $f3->route('GET /', '\App\Controllers\HomeController->index');
 $f3->route('GET /master-data/location','\App\Controllers\HomeController->index');
 $f3->route('GET /master-data/specialism','\App\Controllers\HomeController->index');
@@ -15,11 +15,10 @@ $f3->route('GET /login', '\App\Controllers\LoginController->index');
 $f3->route('GET /login/sign-in', '\App\Controllers\LoginController->index');
 $f3->route('GET /login/reset-password', '\App\Controllers\LoginController->index');
 $f3->route('POST /login', '\App\Controllers\LoginController->access');
-// rest
+# rest
 $f3->route('GET /specialism/list', '\App\Controllers\SpecialismController->list');
 #### user
 $f3->route('GET /user', '\App\Controllers\UserController->info');
-// handler
+# error handler
 $f3->route('GET /error/access/@code', '\App\Controllers\ErrorController->access');
-// error handler
 $f3->set('ONERROR', include_once 'on_error.php');

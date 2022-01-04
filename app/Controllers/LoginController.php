@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Filters\CsrfFormFilter;
+use App\Filters\SessionFalseFilter;
 
 class LoginController extends BaseController
 {
@@ -18,7 +19,7 @@ class LoginController extends BaseController
     $path = $f3->get('PATH');
     $method = $f3->get('VERB');
     if($path == '/login' && $method == 'GET'){
-      // TODO: SessionFalseFilter
+      SessionFalseFilter::before($f3);
     }else if($path == '/login' && $method == 'POST'){
       CsrfFormFilter::before($f3);
     }
