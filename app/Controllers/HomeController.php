@@ -18,11 +18,12 @@ class HomeController extends BaseController
 
   function index($f3) 
   {
+    parent::loadHelper('home');
     $f3->mset(array(
       'title' => 'Inicio',
       'href' => '/login',
-      'stylesheets' => array('build/bundle.app',),
-      'javascripts' => array('build/bundle.app',),
+      'stylesheets' => stylesheetsHome($this->staticURL),
+      'javascripts' => javascriptsHome($this->staticURL),
     ));
     http_response_code(200);
     echo $this->render('home/index', $locals);

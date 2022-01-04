@@ -73,7 +73,7 @@ class ErrorController extends BaseController
         break;
     }
     // response
-    //helper('Helpers\error');
+    parent::loadHelper('error');
     $f3->mset(array(
       'title' => 'Error',
       'href' => '/error/access',
@@ -84,8 +84,8 @@ class ErrorController extends BaseController
       'description' => $data['description'],
       'icon' => $data['icon'],
       'hrefError' => $data['hrefError'],
-      //'stylesheets' => stylesheetsAccess($this->constants),
-      //'javascripts' => [],
+      'stylesheets' => stylesheetsAccess($this->staticURL),
+      'javascripts' => [],
     ));
     // response
     http_response_code($status);
