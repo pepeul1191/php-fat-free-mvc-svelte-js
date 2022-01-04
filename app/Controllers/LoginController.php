@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Filters\CsrfFormFilter;
 
 class LoginController extends BaseController
 {
@@ -14,13 +15,20 @@ class LoginController extends BaseController
   function beforeroute($f3) 
   {
     parent::beforeroute($f3);
+    $path = $f3->get('PATH');
+    $method = $f3->get('VERB');
+    if($path == '/login' && $method == 'GET'){
+      // TODO: SessionFalseFilter
+    }else if($path == '/login' && $method == 'POST'){
+      CsrfFormFilter::before($f3);
+    }
   }
 
   function index($f3) 
   {
     // session
-    $f3->set('SESSION.csrfKey', $f3->get('csrfKey'));
-    $f3->set('SESSION.csrfValue', $f3->get('csrfValue'));
+    $_SESSION['csrfKey'] = $f3->get('csrfKey');
+    $_SESSION['csrfValue'] = $f3->get('csrfValue');
     // response
     parent::loadHelper('login');
     $f3->mset(array(
@@ -39,18 +47,16 @@ class LoginController extends BaseController
     $user = $payload['user'];
     $password = $payload['password'];
     if($user == 'admin' && $password == '123'){
-      $f3->set('SESSION.csrfKey', \App\Libraries\RandomLib::stringNumber(20));
-      $f3->set('SESSION.csrfValue', \App\Libraries\RandomLib::stringNumber(30));
-      $f3->set('SESSION.status', 'active');
-      $f3->set('SESSION.user', $user);
-      $f3->set('SESSION.name', 'Pepe Valdivia');
-      $f3->set('SESSION.img', $f3->get('staticURL') . 'assets/img/default-user.png');
-      $f3->set('SESSION.time', date('Y-m-d H:i:s'));
-      header('Location: ' . '/');
-      exit();
+      $_SESSION['csrfKey'] = \App\Libraries\RandomLib::stringNumber(20);
+      $_SESSION['csrfValue'] = \App\Libraries\RandomLib::stringNumber(30);
+      $_SESSION['status'] = 'active';
+      $_SESSION['user'] = $user;
+      $_SESSION['name'] = 'Pepe Valdivia';
+      $_SESSION['img'] = $f3->get('staticURL') . 'assets/img/default-user.png';
+      $_SESSION['time'] = date('Y-m-d H:i:s');
+      $f3->reroute('/');
     }else{
       $f3->reroute($f3->get('PATH') . '?error=user-pass-mismatch');
-      exit();
     }
   }
 }

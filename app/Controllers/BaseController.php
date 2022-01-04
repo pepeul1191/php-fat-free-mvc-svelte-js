@@ -9,7 +9,7 @@ abstract class BaseController
   function __construct()
   {
     // PASS
-    new \Session();
+    session_start();
   }
 
   function loadHelper($helper)
