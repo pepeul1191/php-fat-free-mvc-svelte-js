@@ -1,3 +1,15 @@
+# Fat Free PHP Framework MVC + SvelteJS
+
+Instalar dependencias:
+
+    $ composer install
+    $ npm install
+
+Scripts
+
+    $ php -S localhost:8080
+    $ npm run dev
+
 ---
 
 Fuentes:
