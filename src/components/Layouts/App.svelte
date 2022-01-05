@@ -17,6 +17,7 @@
   import Dentist from '../Pages/Coa/Dentist.svelte';
   import DentistDetail from '../Pages/Coa/DentistDetail.svelte';
   import Branch from '../Pages/Coa/Branch.svelte';
+  import System from '../Pages/Application/System.svelte';
   import BranchDetail from '../Pages/Coa/BranchDetail.svelte';
   export let url = '';
   export let basepath = '/';
@@ -75,6 +76,8 @@
     <Route path="/coa/branch" component="{Branch}" />
     <Route path="/coa/branch/add" component="{BranchDetail}" />
     <Route path="/coa/branch/edit/:id" let:params><BranchDetail id={params.id}/></Route>
+
+    <Route path="/system" component="{System}" />
     <Route path="/*" component="{Redirect404}" />
   </div>
 </Router>

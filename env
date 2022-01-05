@@ -1,0 +1,4 @@
+FF_ENVIRONMENT = development || production
+FF_CSRF = true || false
+FF_SESSION = true || false
+DB="mysql://root:123@127.0.0.1:3306/classroom2"||"sqlite:db/access.db"

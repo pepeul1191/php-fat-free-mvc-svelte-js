@@ -18,7 +18,7 @@ class HomeController extends BaseController
     $path = $f3->get('PATH');
     $method = $f3->get('VERB');
     if($path == '/'){
-      // SessionTrueFilter::before($f3);
+      SessionTrueFilter::before($f3);
     }
   }
 

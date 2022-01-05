@@ -10,6 +10,10 @@ $f3->route('GET /coa/dentist/add','\App\Controllers\HomeController->index');
 $f3->route('GET /coa/branch','\App\Controllers\HomeController->index');
 $f3->route('GET /coa/branch/edit/@num','\App\Controllers\HomeController->index');
 $f3->route('GET /coa/branch/add','\App\Controllers\HomeController->index');
+
+$f3->route('GET /system','\App\Controllers\HomeController->index');
+$f3->route('GET /system/edit/@num','\App\Controllers\HomeController->index');
+$f3->route('GET /system/new','\App\Controllers\HomeController->index');
 #### login
 $f3->route('GET /login', '\App\Controllers\LoginController->index');
 $f3->route('GET /login/sign-in', '\App\Controllers\LoginController->index');
@@ -21,6 +25,8 @@ $f3->route('GET /specialism/list', '\App\Controllers\SpecialismController->list'
 $f3->route('POST /specialism/save', '\App\Controllers\SpecialismController->save');
 #### user
 $f3->route('GET /user', '\App\Controllers\UserController->info');
+#### system
+$f3->route('GET /system/list', '\App\Controllers\SystemController->list');
 # error handler
 $f3->route('GET /error/access/@code', '\App\Controllers\ErrorController->access');
 $f3->set('ONERROR', include_once 'on_error.php');

@@ -1,3 +1,23 @@
+# Fat Free PHP Framework MVC + SvelteJS
+
+Instalar dependencias:
+
+    $ composer install
+    $ npm install
+
+Scripts
+
+    $ php -S localhost:8080
+    $ npm run dev
+
+### Migraciones
+
+Migraciones con DBMATE - accesos/sqlite3:
+
+    $ dbmate -d "db/migrations/sqlite3" -e "DB" new <<nombre_de_migracion>>
+    $ dbmate -d "db/migrations/sqlite3" -e "DB" up
+    $ dbmate -d "db/migrations/sqlite3" -e "DB" rollback
+
 ---
 
 Fuentes:
