@@ -13,12 +13,14 @@
 			{name: 'Datos Maestros', url: '#', active: true, items: [
 				{name: 'Ubicaciones del Perú', url: '/master-data/location', active: true}, 
 				{name: 'Espcialidades Clínicas', url: '/master-data/specialism', active: true}, 
+				{name: 'Estados de Usuarios', url: '/master-data/state', active: true}, 
 			]}, 
 			{name: 'COA', url: '#', active: true, items: [
 				{name: 'Gestión de Dentistas', url: '/coa/dentist', active: true}, 
 				{name: 'Gestión de Sedes', url: '/coa/branch', active: true}, 
 			]}, 
 			{name: 'Sistemas', url: '/system', active: true, items: []}, 
+			{name: 'Usuarios', url: '/user', active: true, items: []}, 
 		];
 		getUserInfo();
 	});  
@@ -125,5 +127,9 @@
 
 	.dropdown-toggle::after {
     margin-left: 0.555em;
+	}
+
+	td > i, td > a{
+		margin-left: 5px !important;
 	}
 </style>

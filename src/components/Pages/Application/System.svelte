@@ -31,7 +31,7 @@
 		</div>
   </div>
   <div class="row">
-		<div class="col-md-12">
+		<div class="col-md-8">
       <br>
       <DataTable bind:this={dataTableSystem} 
 				urlServices={{ 
@@ -62,6 +62,20 @@
 								icon: 'fa fa-pencil', 
 								style:'font-size:12px; margin-right:10px;',
 								url: '/system/edit/',
+                key: 'id',
+							},
+              {
+								type: 'link', 
+								icon: 'fa fa-users', 
+								style:'font-size:12px; margin-right:10px;',
+								url: '/system/user/',
+                key: 'id',
+							},
+              {
+								type: 'link', 
+								icon: 'fa fa-list', 
+								style:'font-size:12px; margin-right:10px;',
+								url: '/system/permission/',
                 key: 'id',
 							},
 							{

@@ -19,6 +19,7 @@
   import Branch from '../Pages/Coa/Branch.svelte';
   import BranchDetail from '../Pages/Coa/BranchDetail.svelte';
 
+  import State from '../Pages/MasterData/State.svelte';
   import System from '../Pages/Application/System.svelte';
   import SystemDetail from '../Pages/Application/SystemDetail.svelte';
   export let url = '';
@@ -79,6 +80,7 @@
     <Route path="/coa/branch/add" component="{BranchDetail}" />
     <Route path="/coa/branch/edit/:id" let:params><BranchDetail id={params.id}/></Route>
 
+    <Route path="/master-data/state" component="{State}" />
     <Route path="/system" component="{System}" />
     <Route path="/system/new" component="{SystemDetail}" />
     <Route path="/system/edit/:id" let:params><SystemDetail id={params.id}/></Route>

@@ -11,6 +11,7 @@ $f3->route('GET /coa/branch','\App\Controllers\HomeController->index');
 $f3->route('GET /coa/branch/edit/@num','\App\Controllers\HomeController->index');
 $f3->route('GET /coa/branch/add','\App\Controllers\HomeController->index');
 
+$f3->route('GET /master-data/state','\App\Controllers\HomeController->index');
 $f3->route('GET /system','\App\Controllers\HomeController->index');
 $f3->route('GET /system/edit/@num','\App\Controllers\HomeController->index');
 $f3->route('GET /system/new','\App\Controllers\HomeController->index');
@@ -20,6 +21,9 @@ $f3->route('GET /login/sign-in', '\App\Controllers\LoginController->index');
 $f3->route('GET /login/reset-password', '\App\Controllers\LoginController->index');
 $f3->route('POST /login', '\App\Controllers\LoginController->access');
 $f3->route('GET /log-out', '\App\Controllers\LoginController->logout');
+# rest - state
+$f3->route('GET /state/list', '\App\Controllers\StateController->list');
+$f3->route('POST /state/save', '\App\Controllers\StateController->save');
 # rest - specialism
 $f3->route('GET /specialism/list', '\App\Controllers\SpecialismController->list');
 $f3->route('POST /specialism/save', '\App\Controllers\SpecialismController->save');
