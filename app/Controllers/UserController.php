@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Libraries\RandomLib;
 
 class UserController extends BaseController
 {
@@ -71,6 +72,93 @@ class UserController extends BaseController
       $resp = json_encode(array(
         'list' => $rs,
         'pages' => $pages,
+      ));
+    }catch (\Exception $e) {
+      $status = 500;
+      $resp = json_encode(['ups', $e->getMessage()]);
+    }
+    // resp
+    http_response_code($status);
+    echo $resp;
+  }
+
+  function detailSave($f3)
+  {
+    // data
+    $resp = [];
+    $status = 200;
+    $payload = json_decode(file_get_contents('php://input'), true);
+    $createdId = [];
+    // logic
+    \ORM::get_db('access')->beginTransaction();
+    try {
+      if($payload['id'] == 'E'){
+        // check user or email not exist in created users
+        $count = \Model::factory('App\\Models\\User', 'access')
+          ->where_raw('user = ? OR email = ?', array($payload['user'], $payload['email']))
+          ->count();
+        if($count == 0){
+          parent::loadHelper('mail');
+          $n = \Model::factory('App\\Models\\User', 'access')->create();
+          $n->email = $payload['email'];
+          $n->password = $payload['password'];
+          $n->url_picture = $payload['url_picture'];
+          $n->user = $payload['user'];
+          $n->reset_key = RandomLib::stringNumber(15);
+          $n->activation_key = RandomLib::stringNumber(15);
+          $n->save();
+          // response data
+          $resp = $n->id;
+          // send mail
+          sendActivationMail();
+        }else{
+          $status = 501;
+          $resp = 'Usuario y/o correo ya registrado';
+        }
+      }else{
+        // check user or email not exist in other users distinct user id to update
+        $count = \Model::factory('App\\Models\\User', 'access')
+          ->where_raw(
+            '(user = ? OR email = ?) AND id != ?', 
+            array($payload['user'], $payload['email'], $payload['id'])
+          )->count();
+        if($count == 0){
+          $e = \Model::factory('App\\Models\\User', 'access')->find_one($payload['id']);
+          $e->email = $payload['email'];
+          $e->user = $payload['user'];
+          $e->url_picture = $payload['url_picture'];
+          $e->save();
+          $resp = '';
+        }else{
+          $status = 501;
+          $resp = 'Usuario y/o correo ya registrados a otro usuario';
+        }
+      }
+      // commit
+      \ORM::get_db('access')->commit();
+    }catch (\Exception $e) {
+      $status = 500;
+      $resp = json_encode(['ups', $e->getMessage()]);
+    }
+    // resp
+    http_response_code($status);
+    echo $resp;
+  }
+
+  function get($f3)
+  {
+    // data
+    $resp = [];
+    $status = 200;
+    $id = $f3->get('GET.id');
+    // logic
+    try {
+      $r = \Model::factory('App\\Models\\User', 'access')->find_one($id);
+      $resp = json_encode(array(
+        'id' => $r->{'id'},
+        'user' => $r->{'user'},
+        'email' => $r->{'email'},
+        'url_picture' => $r->{'url_picture'},
       ));
     }catch (\Exception $e) {
       $status = 500;

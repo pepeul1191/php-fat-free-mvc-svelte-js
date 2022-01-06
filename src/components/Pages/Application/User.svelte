@@ -107,9 +107,6 @@
 								url: '/user/edit/',
                 key: 'id',
 							},
-							{
-								type: 'delete',
-							},
 						],
 						style: 'text-align:center;width:30%;'
 					},

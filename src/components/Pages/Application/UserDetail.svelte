@@ -81,7 +81,9 @@
       }).catch((resp) =>  {
         if(resp.status == 404){
           launchAlert(null, 'Recurso guardar detalle de usuario no existe en el servidor', 'danger');
-        }else{
+        }else if(resp.status == 501){ 
+          launchAlert(null, resp.data, 'danger');
+        }else { 
           launchAlert(null, 'Ocurrió un error en guardar los datos del usuario', 'danger');
         }
       })
@@ -105,7 +107,12 @@
   };
 
   const generatePassword = () => {
-
+    var characters = 'abcdefghijklmnopqrstuvwxyz';
+    var charactersLength = characters.length;
+    password = '';
+    for ( var i = 0; i < 10; i++ ) {
+      password += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
   };
 
   const resendPassword = () => {

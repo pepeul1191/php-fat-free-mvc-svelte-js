@@ -7,7 +7,8 @@ CREATE TABLE 'users' (
   'email'	VARCHAR(30) NOT NULL,
   'url_picture'	VARCHAR(100) NOT NULL,
   'reset_key'	VARCHAR(15) NOT NULL,
-  'activation_key'	VARCHAR(15) NOT NULL
+  'activation_key'	VARCHAR(15) NOT NULL,
+  'active'	BOOLEAN NOT NULL
 );
 
 -- migrate:down

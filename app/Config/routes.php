@@ -33,6 +33,8 @@ $f3->route('POST /specialism/save', '\App\Controllers\SpecialismController->save
 #### rest - user
 $f3->route('GET /user/info', '\App\Controllers\UserController->info');
 $f3->route('GET /user/list', '\App\Controllers\UserController->list');
+$f3->route('POST /user/detail/save', '\App\Controllers\UserController->detailSave');
+$f3->route('GET /user/get', '\App\Controllers\UserController->get');
 #### rest - system
 $f3->route('GET /system/list', '\App\Controllers\SystemController->list');
 $f3->route('GET /system/get', '\App\Controllers\SystemController->get');

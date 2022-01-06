@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS 'users' (
   'email'	VARCHAR(30) NOT NULL,
   'url_picture'	VARCHAR(100) NOT NULL,
   'reset_key'	VARCHAR(15) NOT NULL,
-  'activation_key'	VARCHAR(15) NOT NULL
+  'activation_key'	VARCHAR(15) NOT NULL,
+  'active'	BOOLEAN NOT NULL
 );
 -- Dbmate schema migrations
 INSERT INTO "schema_migrations" (version) VALUES

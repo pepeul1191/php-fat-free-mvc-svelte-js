@@ -7,4 +7,4 @@ INSERT INTO states (id, name) VALUES
 
 -- migrate:down
 
-TRUNCATE states;
+DELETE FROM states;
