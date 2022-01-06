@@ -44,53 +44,97 @@ class SystemController extends BaseController
     echo $resp;
   }
 
+  function get($f3)
+  {
+    // data
+    $resp = [];
+    $status = 200;
+    $id = $f3->get('GET.id');
+    // logic
+    try {
+      $r = \Model::factory('App\\Models\\System', 'access')->find_one($id);
+      $resp = json_encode(array(
+        'id' => $r->{'id'},
+        'name' => $r->{'name'},
+        'repository' => $r->{'repository'},
+        'branch' => $r->{'branch'},
+        'value' => $r->{'value'},
+        'key' => $r->{'key'},
+        'description' => $r->{'description'},
+      ));
+    }catch (\Exception $e) {
+      $status = 500;
+      $resp = json_encode(['ups', $e->getMessage()]);
+    }
+    // resp
+    http_response_code($status);
+    echo $resp;
+  }
+
   function save($f3)
   {
     // data
     $resp = [];
     $status = 200;
     $payload = json_decode(file_get_contents('php://input'), true);
-    $createdIds = [];
-    $news = $payload['news'];
-		$edits = $payload['edits'];
     $deletes = $payload['deletes'];
     // logic
-    \ORM::get_db('classroom')->beginTransaction();
+    \ORM::get_db('access')->beginTransaction();
     try {
-      // news
-      if(count($news) > 0){
-				foreach ($news as &$new) {
-				  $n = \Model::factory('App\\Models\\Speciailism', 'classroom')->create();
-					$n->name = $new['name'];
-					$n->save();
-				  $temp = [];
-				  $temp['tempId'] = $new['id'];
-	        $temp['newId'] = $n->id;
-	        array_push($createdIds, array(
-            'tmp' => $new['id'],
-            'id' => $n->id,
-          ));
-				}
-      }
-      // edits
-      if(count($edits) > 0){
-				foreach ($edits as &$edit) {
-          $e = \Model::factory('App\\Models\\Speciailism', 'classroom')->find_one($edit['id']);
-					$e->name = $edit['name'];
-					$e->save();
-        }
-      }
       // deletes
       if(count($deletes) > 0){
 				foreach ($deletes as &$delete) {
-			    $d = \Model::factory('App\\Models\\Speciailism', 'classroom')->find_one($delete['id']);
+			    $d = \Model::factory('App\\Models\\System', 'access')->find_one($delete['id']);
 			    $d->delete();
 				}
       }
       // commit
-      \ORM::get_db('classroom')->commit();
+      \ORM::get_db('access')->commit();
       // response data
       $resp = json_encode($createdIds);
+    }catch (\Exception $e) {
+      $status = 500;
+      $resp = json_encode(['ups', $e->getMessage()]);
+    }
+    // resp
+    http_response_code($status);
+    echo $resp;
+  }
+
+  function detailSave($f3)
+  {
+    // data
+    $resp = [];
+    $status = 200;
+    $payload = json_decode(file_get_contents('php://input'), true);
+    $createdId = [];
+    // logic
+    \ORM::get_db('access')->beginTransaction();
+    try {
+      if($payload['id'] == 'E'){
+        $n = \Model::factory('App\\Models\\System', 'access')->create();
+        $n->name = $payload['name'];
+        $n->description = $payload['description'];
+        $n->key = $payload['key'];
+        $n->branch = $payload['branch'];
+        $n->repository = $payload['repository'];
+        $n->value = $payload['value'];
+        $n->save();
+        $createdId = $n->id;
+      }else{
+        $e = \Model::factory('App\\Models\\System', 'access')->find_one($payload['id']);
+        $e->name = $payload['name'];
+        $e->description = $payload['description'];
+        $e->key = $payload['key'];
+        $e->branch = $payload['branch'];
+        $e->repository = $payload['repository'];
+        $e->value = $payload['value'];
+        $e->save();
+      }
+      // commit
+      \ORM::get_db('access')->commit();
+      // response data
+      $resp = json_encode($createdId);
     }catch (\Exception $e) {
       $status = 500;
       $resp = json_encode(['ups', $e->getMessage()]);

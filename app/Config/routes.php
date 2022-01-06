@@ -27,6 +27,9 @@ $f3->route('POST /specialism/save', '\App\Controllers\SpecialismController->save
 $f3->route('GET /user', '\App\Controllers\UserController->info');
 #### system
 $f3->route('GET /system/list', '\App\Controllers\SystemController->list');
+$f3->route('GET /system/get', '\App\Controllers\SystemController->get');
+$f3->route('POST /system/detail/save', '\App\Controllers\SystemController->detailSave');
+$f3->route('POST /system/save', '\App\Controllers\SystemController->save');
 # error handler
 $f3->route('GET /error/access/@code', '\App\Controllers\ErrorController->access');
 $f3->set('ONERROR', include_once 'on_error.php');
