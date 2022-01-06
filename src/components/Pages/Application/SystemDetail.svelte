@@ -105,6 +105,19 @@
       }
     })
   };
+
+  const generateKeys = () => {
+    var characters = 'abcdefghijklmnopqrstuvwxyz';
+    var charactersLength = characters.length;
+    key = '';
+    value = '';
+    for ( var i = 0; i < 15; i++ ) {
+      if (i < 10){
+        key += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      value += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+  };
 </script>
 
 <svelte:head>
@@ -171,7 +184,7 @@
             label={'Llave'}
             bind:value={key}
             placeholder={'Llave de sistema'} 
-            disabled={disabled}
+            disabled={true}
             validations={[
               {type:'notEmpty', message: 'Debe de ingresar un llave'},
               {type:'maxLength', length: 10, message: 'Llave máximo 10 letras'},
@@ -185,7 +198,7 @@
             label={'Valor de llave'}
             bind:value={value}
             placeholder={'Valor de llave de sistema'} 
-            disabled={disabled}
+            disabled={true}
             validations={[
               {type:'notEmpty', message: 'Debe de ingresar un v alor de llave'},
               {type:'maxLength', length: 15, message: 'Valor de llave máximo 15 letras'},
@@ -218,8 +231,10 @@
   </div>
   <div class="row">
     <div class="col-md-12 pull-right">
-      <button class="btn btn-success" disabled="{disabled}" on:click="{saveDetail}"><i class="fa fa-check" aria-hidden="true"></i>
+      <button class="btn btn-success" disabled="{disabled}" on:click="{saveDetail}" style="margin-left:10px;"><i class="fa fa-check" aria-hidden="true"></i>
         {title}</button>
+      <button class="btn btn-secondary" disabled="{disabled}" on:click="{generateKeys}"><i class="fa fa-random" aria-hidden="true"></i>
+        Generar LLaves</button>
     </div>
   </div>
 </div>
@@ -229,7 +244,7 @@
     margin-bottom: 10px;
   }
 
-  .btn-success{
+  .btn{
     float:right;
     margin-top:7px;
   }

@@ -22,6 +22,8 @@
   import State from '../Pages/MasterData/State.svelte';
   import System from '../Pages/Application/System.svelte';
   import SystemDetail from '../Pages/Application/SystemDetail.svelte';
+  import User from '../Pages/Application/User.svelte';
+  import UserDetail from '../Pages/Application/UserDetail.svelte';
   export let url = '';
   export let basepath = '/';
   let modalComponent;
@@ -84,6 +86,9 @@
     <Route path="/system" component="{System}" />
     <Route path="/system/new" component="{SystemDetail}" />
     <Route path="/system/edit/:id" let:params><SystemDetail id={params.id}/></Route>
+    <Route path="/user" component="{User}" />
+    <Route path="/user/new" component="{UserDetail}" />
+    <Route path="/user/edit/:id" let:params><UserDetail id={params.id}/></Route>
     <Route path="/*" component="{Redirect404}" />
   </div>
 </Router>

@@ -5,6 +5,7 @@ require 'vendor/autoload.php';
 // contants
 define('BASE_PATH', dirname(__FILE__));
 define('VIEW_PATH', BASE_PATH . '/app/Views');
+define('UPLOAD_PATH', BASE_PATH . '/public/uploads/');
 // load .env
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();

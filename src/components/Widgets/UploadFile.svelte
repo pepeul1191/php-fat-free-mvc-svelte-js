@@ -10,7 +10,7 @@
   export let urlFile = 'E';
   export let fileName = 'file';
   export let table = false;
-  export let baseUrlFile = '/';
+  export let baseUrlFile = STATIC_URL;
   export let tableKeyURL = 'url';
   export let label = 'Seleccionar Archivo';
   export let disabled = false;
@@ -135,7 +135,6 @@
       }
     }).then(function (response) {
       // handle success
-      // console.log(response);
       urlFile = response.data;
       if(table){
         launchAlert({
@@ -197,8 +196,8 @@
     <i class="fa {uploadButton.icon}" aria-hidden="true"></i>{uploadButton.label} 
   </button>
   {#if viewButton.display}
-  <a class="{viewButton.class}" href={`${baseUrlFile}${urlFile}`} rel="noopener noreferrer" target="_blank" disabled={disabled || disabledView} >
-    <i class="fa {viewButton.icon}" aria-hidden="true"></i>{viewButton.label} 
+  <a class="{viewButton.class}" href={`${baseUrlFile}${urlFile}`} on:click|preventDefault={viewFile} rel="noopener noreferrer" target="_blank" disabled={disabled || disabledView} >
+    <i class="fa {viewButton.icon}" aria-hidden="true"></i>{viewButton.label} XD
   </a>
   {/if}
 </div>

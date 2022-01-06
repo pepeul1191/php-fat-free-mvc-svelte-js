@@ -18,6 +18,10 @@ Migraciones con DBMATE - accesos/sqlite3:
     $ dbmate -d "db/migrations/sqlite3" -e "DB" up
     $ dbmate -d "db/migrations/sqlite3" -e "DB" rollback
 
+### Github
+
+    $ git push origin access:access
+
 ---
 
 Fuentes:

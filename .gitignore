@@ -128,6 +128,7 @@ nb-configuration.xml
 composer.lock
 
 public/fonts
+public/uploads
 package-lock.json
 node_modules
 logs
