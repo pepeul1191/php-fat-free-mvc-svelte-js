@@ -71,7 +71,7 @@ var AppView = Backbone.View.extend({
         var i = 0;
         allTextLines.forEach(element => {
           if(i != 0 && (allTextLines.length - 2) >= i){
-            var dataArray = element.split('::');
+            var dataArray = element.split(',');
             var student = new Student({
               id: i ,
               last_names: dataArray[0],

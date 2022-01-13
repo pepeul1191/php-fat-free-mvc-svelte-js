@@ -133,4 +133,4 @@ node_modules
 logs
 tmp
 public/bower_components
-public/upload
+public/uploads
