@@ -10,6 +10,10 @@ Scripts
     $ php -S localhost:8080
     $ npm run dev
 
+### Github
+
+    $ git push origin pdf-generator:pdf-generator
+
 ---
 
 Fuentes:
