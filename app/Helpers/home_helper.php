@@ -6,7 +6,10 @@ function stylesheetsHome($staticURL)
   switch ($_ENV['FF_ENVIRONMENT']) {
     case 'development':
       $stylesheets = [
-        $staticURL . 'build/bundle.app',
+        $staticURL .'bower_components/bootstrap/dist/css/bootstrap.min',
+        $staticURL .'bower_components/font-awesome/css/font-awesome.min',
+        $staticURL .'assets/css/constants',
+        $staticURL .'assets/css/styles',
       ];
       break;
     case 'production':
@@ -26,8 +29,11 @@ function javascriptsHome($staticURL)
   switch ($_ENV['FF_ENVIRONMENT']) {
     case 'development':
       $javascripts = [
-        $staticURL . 'vendor/bootstrap/bootstrap.bundle.min',
-        $staticURL . 'build/bundle.app',
+        $staticURL . 'bower_components/jquery/dist/jquery.min',
+        $staticURL . 'bower_components/bootstrap/dist/js/bootstrap.min',
+        $staticURL . 'bower_components/underscore/underscore-min',
+        $staticURL . 'bower_components/backbone/backbone-min',
+        $staticURL . 'assets/js/app',
       ];
       break;
     case 'production':
