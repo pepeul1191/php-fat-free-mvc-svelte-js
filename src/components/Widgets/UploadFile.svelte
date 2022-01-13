@@ -197,7 +197,7 @@
   </button>
   {#if viewButton.display}
   <a class="{viewButton.class}" href={`${baseUrlFile}${urlFile}`} on:click|preventDefault={viewFile} rel="noopener noreferrer" target="_blank" disabled={disabled || disabledView} >
-    <i class="fa {viewButton.icon}" aria-hidden="true"></i>{viewButton.label} XD
+    <i class="fa {viewButton.icon}" aria-hidden="true"></i>{viewButton.label}
   </a>
   {/if}
 </div>
