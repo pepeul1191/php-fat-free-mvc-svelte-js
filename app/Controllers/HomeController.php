@@ -34,24 +34,4 @@ class HomeController extends BaseController
     http_response_code(200);
     echo $this->render('home/index', $locals);
   }
-
-  function specialisms($f3)
-  {
-    parent::loadHelper('orm');
-    // data
-    $resp = [];
-    $status = 200;
-    // logic
-    try {
-      $rs = \Model::factory('App\\Models\\Speciailism', 'classroom')
-        ->find_array();
-      $resp = json_encode($rs);
-    }catch (\Exception $e) {
-      $status = 500;
-      $resp = json_encode(['ups', $e->getMessage()]);
-    }
-    // resp
-    http_response_code($status);
-    echo $resp;
-  }
 }
