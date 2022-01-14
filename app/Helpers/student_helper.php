@@ -47,7 +47,7 @@ function sendPDF($student, $folder, $baseFile, $type, $event_id, $webURL)
     $page->setFont($customFont, 36);
     $page->drawText($student->{'grade'}, 625, 180);
   }
-  if($type == 'course'){ // diplomado
+  if($type == 'course'){ // curso
     // qr
     $page = $pdf->pages[0];
     $page->drawImage($image, 90, 35, 265, 210); // source, x1, y1, x2, y2 || 150, 300, 350, 500
@@ -64,6 +64,19 @@ function sendPDF($student, $folder, $baseFile, $type, $event_id, $webURL)
     $page->setFont($customFont, 26);
     $page->drawText($student->{'code'}, 625, 330);
   }
-  
+  if($type == 'free-course'){ // curso libre
+    // qr
+    $page = $pdf->pages[0];
+    $page->drawImage($image, 90, 35, 265, 210); // source, x1, y1, x2, y2 || 150, 300, 350, 500
+    $pdf->pages[0] = $page;
+    $page->setFont($customFont, 22);
+    // name
+    $textWidth = widthForStringUsingFontSize(
+      $student->{'last_names'} . ' ' . $student->{'first_names'}, $customFont, 22
+    );
+    $position = (800 - $textWidth)/2;
+    $page->drawText(strtoupper($student->{'last_names'} . ' ' . $student->{'first_names'}), $position, 330);
+  }
+  // save pdf
   $pdf->save($folder . $student->{'id'} . ' ' . $student->{'last_names'} . ' ' . $student->{'first_names'});
 }
