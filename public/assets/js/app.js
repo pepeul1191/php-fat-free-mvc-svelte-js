@@ -1,6 +1,7 @@
 // Backbone Models and Collections and View
 var Student = Backbone.Model.extend({
 	defaults: {
+    dni: '',
 		first_names: '',
     last_names: '',
     email: '',
@@ -19,6 +20,7 @@ var AppView = Backbone.View.extend({
   folderPDF: null,
   basePDFUploaded: null,
   pdfType: null,
+  event_id: null,
   el: '#app',
   initialize: function(){
   },
@@ -35,6 +37,11 @@ var AppView = Backbone.View.extend({
   },
   changedType: function(event){
     this.pdfType = event.target.value;
+    if(this.pdfType == 'certified'){
+      $("#btnSend").html('<i class="fa fa-download" aria-hidden="true"></i>Descargar Documentos');
+    }else{
+      $("#btnSend").html('<i class="fa fa-send" aria-hidden="true"></i> Enviar Constancias');
+    }
   },
   loadCSV: function(event){
     var inputFile = $('#inputFileCSV');
@@ -74,12 +81,13 @@ var AppView = Backbone.View.extend({
             var dataArray = element.split(',');
             var student = new Student({
               id: i ,
-              last_names: dataArray[0],
-              first_names: dataArray[1],
-              email: dataArray[2],
-              grade: dataArray[3],
-              code: dataArray[4],
-              subject: dataArray[5],
+              dni: dataArray[0],
+              last_names: dataArray[1],
+              first_names: dataArray[2],
+              email: dataArray[3],
+              grade: dataArray[4],
+              code: dataArray[5],
+              subject: dataArray[6],
             });
             _this.students.add(student);  
           }
@@ -93,11 +101,12 @@ var AppView = Backbone.View.extend({
   showTable: function(){
     $('#studentTable').empty();
     var tbody = '';
-    if(this.pdfType == 'certified'){
+    if(this.pdfType == 'certified'){ // Diplomado
       tbody = `
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">DNI</th>
             <th scope="col">Apellidos</th>
             <th scope="col">Nombres</th>
             <th scope="col">Correo</th>
@@ -115,6 +124,7 @@ var AppView = Backbone.View.extend({
         tbody += `
           <tr model-id="${student.get('id')}">
             <th>${++i}</th>
+            <td>${student.get('dni')}</td>
             <td>${student.get('last_names')}</td>
             <td>${student.get('first_names')}</td>
             <td>${student.get('email')}</td>
@@ -134,11 +144,12 @@ var AppView = Backbone.View.extend({
       tbody += `
         </tbody>
       `;
-    }else if(this.pdfType == 'course'){
+    }else if(this.pdfType == 'course'){ // curso
       tbody = `
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">DNI</th>
             <th scope="col">Apellidos</th>
             <th scope="col">Nombres</th>
             <th scope="col">Correo</th>
@@ -156,6 +167,7 @@ var AppView = Backbone.View.extend({
         tbody += `
           <tr model-id="${student.get('id')}">
             <th>${++i}</th>
+            <td>${student.get('dni')}</td>
             <td>${student.get('last_names')}</td>
             <td>${student.get('first_names')}</td>
             <td>${student.get('email')}</td>
@@ -174,11 +186,12 @@ var AppView = Backbone.View.extend({
       tbody += `
         </tbody>
       `;
-    } else if(this.pdfType == 'free-course'){
+    } else if(this.pdfType == 'free-course'){ // curso libre
     tbody = `
       <thead>
         <tr>
           <th scope="col">#</th>
+          <th scope="col">DNI</th>
           <th scope="col">Apellidos</th>
           <th scope="col">Nombres</th>
           <th scope="col">Correo</th>
@@ -195,6 +208,7 @@ var AppView = Backbone.View.extend({
       tbody += `
         <tr model-id="${student.get('id')}">
           <th>${++i}</th>
+          <td>${student.get('dni')}</td>
           <td>${student.get('last_names')}</td>
           <td>${student.get('first_names')}</td>
           <td>${student.get('email')}</td>
@@ -283,8 +297,8 @@ var AppView = Backbone.View.extend({
       },
       async: true,
       beforeSend: function() {
-        $("#btnSend").prop("disabled", true);
-        $(".btn-resend").prop("disabled", true);
+        //$("#btnSend").prop("disabled", true);
+        //$(".btn-resend").prop("disabled", true);
       },
       success: function(data) {
         var respData = JSON.parse(data);
@@ -357,6 +371,7 @@ var AppView = Backbone.View.extend({
         file: _this.basePDFUploaded,
         folder: _this.folderPDF,
         type: _this.pdfType, 
+        event_id: $('#txtId').val(),
       },
       headers: {
         // [CSRF_KEY]: CSRF,

@@ -16,8 +16,8 @@ class StudentController extends BaseController
   function beforeroute($f3) 
   {
     parent::beforeroute($f3);
-    //SessionTrueApiFilter::before($f3);
-    //CsrfApiFilter::before($f3);
+    SessionTrueApiFilter::before($f3);
+    CsrfApiFilter::before($f3);
   }
 
   function upload($f3)
@@ -44,6 +44,42 @@ class StudentController extends BaseController
         'name' => $rand . '.' . $extension,
         'folder' => UPLOAD_PATH . $timestamp . '/',
       ));
+    }catch (Exception $e) {
+      $status = 500;
+      $resp = json_encode(['ups', $e->getMessage()]);
+    }
+    // resp
+    http_response_code($status);
+    echo $resp;
+  }
+
+  function send($f3)
+  {
+    // data
+    $payload = $f3->get('POST');
+    $createdIds = [];
+    $students = json_decode($payload['data']);
+		$baseFile = $payload['file'];
+    $folder = $payload['folder'];
+    $type = $payload['type'];
+    $event_id = $payload['event_id'];
+    $resp = array();
+    try {
+      parent::loadHelper('student');
+      foreach ($students as &$student) {
+        $statusStudent = 'ok';
+        try {
+          sendPDF($student, $folder, $baseFile, $type, $event_id, $f3->webURL);
+        }catch (Exception $e) {
+          $statusStudent = 'error';
+        }
+        array_push($resp, array(
+          '_id' => $student->{'id'},
+          'status' => $statusStudent,
+        ));
+      }
+      // response
+      $resp = json_encode($resp);
     }catch (Exception $e) {
       $status = 500;
       $resp = json_encode(['ups', $e->getMessage()]);

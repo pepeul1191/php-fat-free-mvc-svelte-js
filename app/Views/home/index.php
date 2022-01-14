@@ -77,7 +77,13 @@
         <button class="btn btn-success my-1" id="btnLoadCSV"><i class="fa fa-upload" aria-hidden="true"></i>Cargar Archivo</button>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-1" style="padding-top: 28px;">
+      <div class="form-group">
+        <label for="txtId">Evento ID</label>
+        <input type="text" class="form-control" id="txtId">
+      </div>
+    </div>
+    <div class="col-md-2">
       <div class="form-group" style="padding-top: 35px;">
         <label for=""></label>
         <button class="btn btn-success my-1" id="btnSend"><i class="fa fa-send" aria-hidden="true"></i>Enviar Constancias</button>
