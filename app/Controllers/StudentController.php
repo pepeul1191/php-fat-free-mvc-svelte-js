@@ -69,7 +69,15 @@ class StudentController extends BaseController
       foreach ($students as &$student) {
         $statusStudent = 'ok';
         try {
-          sendPDF($student, $folder, $baseFile, $type, $event_id, $f3->webURL);
+          $pathPDF = sendPDF($student, $folder, $baseFile, $type, $event_id, $f3->webURL);
+          if($type == 'course' || $type == 'free-course'){
+            sendEmail(
+              $student->{'email'},
+              $student->{'subject'},
+              $f3->webURL,
+              $pathPDF,
+            );
+          }
         }catch (Exception $e) {
           $statusStudent = 'error';
         }
@@ -87,5 +95,15 @@ class StudentController extends BaseController
     // resp
     http_response_code($status);
     echo $resp;
+  }
+
+  function deletePDFs($f3)
+  {
+    parent::loadHelper('student');
+    deleleUpload(substr(UPLOAD_PATH, 0, -1));
+    mkdir(UPLOAD_PATH, 0755);
+    // resp
+    http_response_code(200);
+    echo 'ok';
   }
 }

@@ -80,3 +80,17 @@ function sendPDF($student, $folder, $baseFile, $type, $event_id, $webURL)
   // save pdf
   $pdf->save($folder . $student->{'id'} . ' ' . $student->{'last_names'} . ' ' . $student->{'first_names'});
 }
+
+function sendEmail($email, $subject, $webURL, $pathPDF)
+{
+
+}
+
+function deleleUpload($dir)
+{
+  $files = array_diff(scandir($dir), array('.','..'));
+  foreach ($files as $file) {
+    (is_dir("$dir/$file")) ? deleleUpload("$dir/$file") : unlink("$dir/$file");
+  }
+  return rmdir($dir);
+}
