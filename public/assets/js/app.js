@@ -113,8 +113,6 @@ var AppView = Backbone.View.extend({
             <th scope="col">Asunto</th>
             <th class="text-center" scope="col">Nota</th>
             <th class="text-center" scope="col">Cód. de Registro</th>
-            <th scope="col">Acciones</th>
-            <th scope="col">Resultado</th>
           </tr>
         </thead>
         <tbody>
@@ -131,13 +129,6 @@ var AppView = Backbone.View.extend({
             <td>${student.get('subject')}</td>
             <td class="text-center">${student.get('grade')}</td>
             <td class="text-center">${student.get('code')}</td>
-            <td>
-              <button type="button" class="btn btn-info btn-resend">
-                <i class="fa fa-undo" aria-hidden="true"></i>
-                  Reennviar
-                </button>
-            </td>
-            <td>Envio Pendiente</td>
           </tr>
         `;
       });
@@ -155,8 +146,6 @@ var AppView = Backbone.View.extend({
             <th scope="col">Correo</th>
             <th scope="col">Asunto</th>
             <th class="text-center" scope="col">Registro</th>
-            <th scope="col">Acciones</th>
-            <th scope="col">Resultado</th>
           </tr>
         </thead>
         <tbody>
@@ -173,13 +162,6 @@ var AppView = Backbone.View.extend({
             <td>${student.get('email')}</td>
             <td>${student.get('subject')}</td>
             <td class="text-center">${student.get('code')}</td>
-            <td>
-              <button type="button" class="btn btn-info btn-resend">
-                <i class="fa fa-undo" aria-hidden="true"></i>
-                  Reennviar
-              </button>
-            </td>
-            <td>Envio Pendiente</td>
           </tr>
         `;
       });
@@ -382,11 +364,7 @@ var AppView = Backbone.View.extend({
         $(".btn-resend").prop("disabled", true);
       },
       success: function(data) {
-        var respData = JSON.parse(data);
-        respData.forEach(data => {
-          var tr = $("tr[model-id='" + data._id +"']");
-          tr.children().last().html('Enviado')
-        });
+        window.open(STATIC_URL + data, '_blank');
         $("#btnSend").prop("disabled", false);
         $(".btn-resend").prop("disabled", false);
       }

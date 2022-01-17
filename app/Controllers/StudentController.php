@@ -5,6 +5,9 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Filters\SessionTrueApiFilter;
 use App\Filters\CsrfApiFilter;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FirePHPHandler;
 
 class StudentController extends BaseController
 {
@@ -55,7 +58,10 @@ class StudentController extends BaseController
 
   function send($f3)
   {
+    // logger
+    $logger = new Logger('my_logger');
     // data
+    $status = 200;
     $payload = $f3->get('POST');
     $createdIds = [];
     $students = json_decode($payload['data']);
@@ -64,30 +70,36 @@ class StudentController extends BaseController
     $type = $payload['type'];
     $event_id = $payload['event_id'];
     $resp = array();
+    $logger->pushHandler(new StreamHandler($folder . 'sendding.log', Logger::DEBUG));
+    $logger->pushHandler(new FirePHPHandler());
     try {
       parent::loadHelper('student');
       foreach ($students as &$student) {
-        $statusStudent = 'ok';
         try {
-          $pathPDF = sendPDF($student, $folder, $baseFile, $type, $event_id, $f3->webURL);
+          $pdfInfo = doPDF($student, $folder, $baseFile, $type, $event_id, $f3->webURL);
+          $logger->info('Certificado (' . $type . ') del alumno ' . $student->{'last_names'} . ' ' . $student->{'first_names'} . 'creado. ');
           if($type == 'course' || $type == 'free-course'){
-            sendEmail(
+            /*sendEmail(
               $student->{'email'},
               $student->{'subject'},
               $f3->webURL,
-              $pathPDF,
-            );
+              $pdfInfo,
+            );*/
+            $logger->info('Certificado (' . $type . ') del alumno ' . $student->{'last_names'} . ' ' . $student->{'first_names'} . 'enviado al correo ' . $student->{'email'} . '.');
           }
         }catch (Exception $e) {
-          $statusStudent = 'error';
+          $logger->error('El certificado del alumno ' . $student . 'no ha sido creado correctamente o enviado');
         }
-        array_push($resp, array(
-          '_id' => $student->{'id'},
-          'status' => $statusStudent,
-        ));
       }
+      // download zip
+      $zipper = new \Chumper\Zipper\Zipper;
+      $files = glob($folder . '*');
+      $rand = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 20);
+      $zipper->make(UPLOAD_PATH . $rand . '.zip');
+      $zipper->add($files); 
+      $zipper->close();
       // response
-      $resp = json_encode($resp);
+      $resp = 'uploads/' . $rand . '.zip';
     }catch (Exception $e) {
       $status = 500;
       $resp = json_encode(['ups', $e->getMessage()]);
@@ -100,7 +112,7 @@ class StudentController extends BaseController
   function deletePDFs($f3)
   {
     parent::loadHelper('student');
-    deleleUpload(substr(UPLOAD_PATH, 0, -1));
+    deleleUpload(UPLOAD_PATH);
     mkdir(UPLOAD_PATH, 0755);
     // resp
     http_response_code(200);

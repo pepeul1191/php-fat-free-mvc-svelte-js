@@ -1,4 +1,0 @@
-MAIL_PORT=465
-MAIL_USER="xyz@gmail.com"
-MAIL_PASS="xyz"
-MAIL_HOST="smtp.google.com"

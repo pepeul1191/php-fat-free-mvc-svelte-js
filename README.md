@@ -14,6 +14,10 @@ Scripts
 
     $ git push origin pdf-generator:pdf-generator
 
+### ZIP
+    
+    $ sudo apt-get install php-zip
+
 ---
 
 Fuentes:
@@ -22,3 +26,4 @@ Fuentes:
 + https://github.com/f3-factory/f3-cms/blob/main/app/routes.ini
 + https://fatfreeframework.com/3.7/quick-reference
 + https://stackoverflow.com/questions/40510806/php-return-data-from-anonymous-in-file
++ https://github.com/pepeul1191/slimphp-boilerplate

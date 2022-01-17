@@ -1,0 +1,6 @@
+MAIL_SENDER="contacto@antergo."
+MAIL_USER="pepe.valdivia.caballero@gmail.com"
+MAIL_PASS="zeyfpzplyzuszgwl"
+MAIL_US="demo@softweb.pe"
+MAIL_HOST="smtp.gmail.com"
+MAIL_PORT=587

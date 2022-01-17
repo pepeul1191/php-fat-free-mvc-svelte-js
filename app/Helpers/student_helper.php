@@ -16,8 +16,9 @@ function widthForStringUsingFontSize($string, $font, $fontSize)
     return $stringWidth;
  }
 
-function sendPDF($student, $folder, $baseFile, $type, $event_id, $webURL)
+function doPDF($student, $folder, $baseFile, $type, $event_id, $webURL)
 {
+  $resp = array();
   // qr
   $data = '%sstuendt/check?event_id=%d&dni=%d&code=%s&grade=%d' ;
   $data = sprintf($data, $webURL, $event_id, $student->{'dni'}, $student->{'code'}, $student->{'grade'});
@@ -46,6 +47,8 @@ function sendPDF($student, $folder, $baseFile, $type, $event_id, $webURL)
     // grade
     $page->setFont($customFont, 36);
     $page->drawText($student->{'grade'}, 625, 180);
+    // resp
+    $resp = null;
   }
   if($type == 'course'){ // curso
     // qr
@@ -79,18 +82,77 @@ function sendPDF($student, $folder, $baseFile, $type, $event_id, $webURL)
   }
   // save pdf
   $pdf->save($folder . $student->{'id'} . ' ' . $student->{'last_names'} . ' ' . $student->{'first_names'});
+  // resp
+  if($resp != null){
+    $resp['filePath'] = $folder . $student->{'id'} . ' ' . $student->{'last_names'} . ' ' . $student->{'first_names'};
+    $resp['image'] = $image;
+  }
+  return $resp;
 }
 
 function sendEmail($email, $subject, $webURL, $pathPDF)
 {
-
+  // add .env from helpers
+  $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
+  $dotenv->load();
+  $layout = require __DIR__ . '/../views/congratulations.php';
+  $logo_url = $config['static_url'] . 'assets/img/mail-logo.png';
+  $img_url = $config['static_url'] . 'assets/img/mail-background.jpeg';
+  $favicon = $config['static_url'] . 'favicon.png';
+  $data_layout = array(
+    '%name' => $name, 
+    '%email' => $email,
+    '%phone' => $phone,  
+    '%comment' => $comment, 
+    '%logo_url' => $logo_url,
+    '%img_url' => $img_url,
+    '%base_url' => $config['base_url'],
+    '%favicon' => $favicon,
+    '%primary' => $_ENV['PRIMARY'],
+    '%secondary' => $_ENV['SECONDARY'],
+    '%enterprise_name' => $_ENV['NAME'],
+    '%about' => $_ENV['ABOUT'],
+    '%adress' => $_ENV['ADRESS'],
+    '%phone' => $_ENV['PHONE'],
+    '%year' => date('Y'),
+  );
+  $message = str_replace(
+    array_keys($data_layout), 
+    array_values($data_layout), 
+    $layout
+  );
+  // send mail
+  $mail = new PHPMailer(true);
+  try {
+    // server settings
+    $mail->SMTPDebug = 0;
+    $mail->isSMTP();
+    $mail->CharSet = 'UTF-8';
+    $mail->Debugoutput = 'html';
+    $mail->Host = $_ENV['MAIL_HOST'];
+    $mail->SMTPAuth = true;
+    $mail->Username = $_ENV['MAIL_USER'];
+    $mail->Password = $_ENV['MAIL_PASS'];
+    $mail->SMTPSecure = 'tls'; // gmail tls, otro ssl
+    $mail->SMTPAuth   = true; 
+    $mail->Port = $_ENV['MAIL_PORT'];
+    // recipients
+    $mail->setFrom($_ENV['MAIL_SENDER'], $_ENV['NAME']);
+    $mail->addAddress($_ENV['MAIL_US'], $name);     // Add a recipient
+    // content
+    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->Subject = $_ENV['NAME'] . ' - Mensaje desde el sitio web';
+    $mail->Body = $message;
+    // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+    // send
+    $mail->send();
+  } catch (Exception $e) {
+    $resp['status'] = 500;
+    $resp['message'] = $e->getMessage();
+  }
 }
 
 function deleleUpload($dir)
 {
-  $files = array_diff(scandir($dir), array('.','..'));
-  foreach ($files as $file) {
-    (is_dir("$dir/$file")) ? deleleUpload("$dir/$file") : unlink("$dir/$file");
-  }
-  return rmdir($dir);
+  system('rm -rf '.escapeshellarg($dir));
 }
