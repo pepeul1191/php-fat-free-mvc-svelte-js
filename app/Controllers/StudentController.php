@@ -79,12 +79,12 @@ class StudentController extends BaseController
           $pdfInfo = doPDF($student, $folder, $baseFile, $type, $event_id, $f3->webURL);
           $logger->info('Certificado (' . $type . ') del alumno ' . $student->{'last_names'} . ' ' . $student->{'first_names'} . 'creado. ');
           if($type == 'course' || $type == 'free-course'){
-            /*sendEmail(
+            sendEmail(
               $student->{'email'},
               $student->{'subject'},
               $f3->webURL,
               $pdfInfo,
-            );*/
+            );
             $logger->info('Certificado (' . $type . ') del alumno ' . $student->{'last_names'} . ' ' . $student->{'first_names'} . 'enviado al correo ' . $student->{'email'} . '.');
           }
         }catch (Exception $e) {

@@ -95,7 +95,7 @@ function sendEmail($email, $subject, $webURL, $pathPDF)
   // add .env from helpers
   $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
   $dotenv->load();
-  $layout = require __DIR__ . '/../views/congratulations.php';
+  $layout = VIEW_PATH . '/mails/congratulations.php';
   $logo_url = $config['static_url'] . 'assets/img/mail-logo.png';
   $img_url = $config['static_url'] . 'assets/img/mail-background.jpeg';
   $favicon = $config['static_url'] . 'favicon.png';
