@@ -2,8 +2,8 @@
 
 if($_ENV['FF_ENVIRONMENT'] == 'production'){
   return array(
-    'baseURL' => 'https://softweb.pe/XD',
-    'staticURL' => 'https://softweb.pe/public/',
+    'baseURL' => 'http://qr-pdf.softweb.pe/',
+    'staticURL' => 'http://qr-pdf.softweb.pe/public/',
     'webURL' => 'https://legisjuristas.com/',
     'csrfKey' => 'demo_',
     'csrfValue' => '123_',
