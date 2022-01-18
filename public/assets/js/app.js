@@ -194,13 +194,6 @@ var AppView = Backbone.View.extend({
           <td>${student.get('first_names')}</td>
           <td>${student.get('email')}</td>
           <td>${student.get('subject')}</td>
-          <td>
-            <button type="button" class="btn btn-info btn-resend">
-              <i class="fa fa-undo" aria-hidden="true"></i>
-                Reennviar
-            </button>
-          </td>
-          <td>Envio Pendiente</td>
         </tr>
       `;
     });

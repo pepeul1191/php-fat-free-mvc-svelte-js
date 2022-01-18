@@ -87,7 +87,7 @@ function doPDF($student, $folder, $baseFile, $type, $event_id, $webURL)
   // resp
   if(empty($resp)){
     $resp['filePath'] = $folder . $student->{'id'} . ' ' . $student->{'last_names'} . ' ' . $student->{'first_names'};
-    $resp['image'] = $image;
+    $resp['qr'] = $qr;
   }
   return $resp;
 }
@@ -98,11 +98,11 @@ function sendEmail($student, $webURL, $pdf)
   $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
   $dotenv->load();
   $layout = require VIEW_PATH . '/mails/congratulations.php';
-  $logo_url = $webURL . 'assets/img/mail-logo.png';
-  $img_url = $webURL . 'assets/img/mail-background.jpeg';
+  $logo_url = 'http://legisjuristas.com/public/assets/img/legis-mail.png';//$webURL . 'assets/img/mail-logo.png';
+  $img_url = 'http://legisjuristas.com/public/assets/img/slider.jpg';//$webURL . 'assets/img/mail-background.jpeg';
   $favicon = $webURL . 'favicon.png';
   $data_layout = array(
-    '%email' => $student->{'email'},
+    '%email' => $_ENV['MAIL_SENDER'],
     '%phone' => $phone,  
     '%comment' => $comment, 
     '%logo_url' => $logo_url,
@@ -115,6 +115,7 @@ function sendEmail($student, $webURL, $pdf)
     '%about' => $_ENV['ABOUT'],
     '%adress' => $_ENV['ADRESS'],
     '%phone' => $_ENV['PHONE'],
+    '%qr' => $pdf['qr'],
     '%year' => date('Y'),
   );
   $message = str_replace(
@@ -146,6 +147,7 @@ function sendEmail($student, $webURL, $pdf)
     $mail->addAttachment($pdf['filePath'], $student->{'last_names'} . ' ' . $student->{'first_names'} . '.pdf');
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
     // send
+    // echo $message;exit();
     $mail->send();
   } catch (Exception $e) {
     var_dump($e);

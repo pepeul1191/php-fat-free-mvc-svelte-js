@@ -149,6 +149,7 @@ return <<<EOD
 
 		.email-section{
 			padding:2.5em;
+			padding-top: 0.5em;
 		}
 
 		/*BUTTON*/
@@ -360,9 +361,11 @@ return <<<EOD
 								<tr>
                   <td class="bg_white email-section" style="text-align:center;">
                     <div class="heading-section heading-section-white">
+										padding-top: 0.5em;
                       <span class="subheading color_gray"></span>
                       <p class="color_gray" style="font-size:18px;">Por haber culminado satisfactoriamente el curso de especialización. <br>Su certificado se encuentra adjunto en el presente correo.</p>
                     </div>
+										<!-- <img src="%qr" alt="QR Code" /> -->
                   </td>
 								</tr>
 							</tbody>
@@ -377,6 +380,7 @@ return <<<EOD
 					<tr>
 				<td class="bg_primary footer email-section" valign="middle">
 				<table>
+				padding-top: 0.5em;
 				<tbody><tr>
 				<td style="padding-top: 20px;" width="33.333%" valign="top">
 				<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -424,6 +428,7 @@ return <<<EOD
 				<tr>
 				<td class="bg_secondary footer email-section" valign="middle">
 				<table>
+				padding-top: 0.5em;
 				<tbody><tr>
 				<td width="33.333%" valign="top">
 				<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
