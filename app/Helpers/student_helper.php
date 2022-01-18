@@ -2,6 +2,8 @@
 
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 function widthForStringUsingFontSize($string, $font, $fontSize)
 {
@@ -83,25 +85,24 @@ function doPDF($student, $folder, $baseFile, $type, $event_id, $webURL)
   // save pdf
   $pdf->save($folder . $student->{'id'} . ' ' . $student->{'last_names'} . ' ' . $student->{'first_names'});
   // resp
-  if($resp != null){
+  if(empty($resp)){
     $resp['filePath'] = $folder . $student->{'id'} . ' ' . $student->{'last_names'} . ' ' . $student->{'first_names'};
     $resp['image'] = $image;
   }
   return $resp;
 }
 
-function sendEmail($email, $subject, $webURL, $pathPDF)
+function sendEmail($student, $webURL, $pdf)
 {
   // add .env from helpers
   $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
   $dotenv->load();
-  $layout = VIEW_PATH . '/mails/congratulations.php';
-  $logo_url = $config['static_url'] . 'assets/img/mail-logo.png';
-  $img_url = $config['static_url'] . 'assets/img/mail-background.jpeg';
-  $favicon = $config['static_url'] . 'favicon.png';
+  $layout = require VIEW_PATH . '/mails/congratulations.php';
+  $logo_url = $webURL . 'assets/img/mail-logo.png';
+  $img_url = $webURL . 'assets/img/mail-background.jpeg';
+  $favicon = $webURL . 'favicon.png';
   $data_layout = array(
-    '%name' => $name, 
-    '%email' => $email,
+    '%email' => $student->{'email'},
     '%phone' => $phone,  
     '%comment' => $comment, 
     '%logo_url' => $logo_url,
@@ -130,7 +131,6 @@ function sendEmail($email, $subject, $webURL, $pathPDF)
     $mail->CharSet = 'UTF-8';
     $mail->Debugoutput = 'html';
     $mail->Host = $_ENV['MAIL_HOST'];
-    $mail->SMTPAuth = true;
     $mail->Username = $_ENV['MAIL_USER'];
     $mail->Password = $_ENV['MAIL_PASS'];
     $mail->SMTPSecure = 'tls'; // gmail tls, otro ssl
@@ -138,21 +138,18 @@ function sendEmail($email, $subject, $webURL, $pathPDF)
     $mail->Port = $_ENV['MAIL_PORT'];
     // recipients
     $mail->setFrom($_ENV['MAIL_SENDER'], $_ENV['NAME']);
-    $mail->addAddress($_ENV['MAIL_US'], $name);     // Add a recipient
+    $mail->addAddress($student->{'email'}, $student->{'email'});     // Add a recipient
     // content
     $mail->isHTML(true);                                  // Set email format to HTML
-    $mail->Subject = $_ENV['NAME'] . ' - Mensaje desde el sitio web';
+    $mail->Subject = $student->{'subject'};
     $mail->Body = $message;
+    $mail->addAttachment($pdf['filePath'], $student->{'last_names'} . ' ' . $student->{'first_names'} . '.pdf');
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
     // send
     $mail->send();
   } catch (Exception $e) {
+    var_dump($e);
     $resp['status'] = 500;
     $resp['message'] = $e->getMessage();
   }
-}
-
-function deleleUpload($dir)
-{
-  system('rm -rf '.escapeshellarg($dir));
 }

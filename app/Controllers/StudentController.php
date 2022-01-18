@@ -80,8 +80,7 @@ class StudentController extends BaseController
           $logger->info('Certificado (' . $type . ') del alumno ' . $student->{'last_names'} . ' ' . $student->{'first_names'} . 'creado. ');
           if($type == 'course' || $type == 'free-course'){
             sendEmail(
-              $student->{'email'},
-              $student->{'subject'},
+              $student,
               $f3->webURL,
               $pdfInfo,
             );
@@ -112,7 +111,7 @@ class StudentController extends BaseController
   function deletePDFs($f3)
   {
     parent::loadHelper('student');
-    deleleUpload(UPLOAD_PATH);
+    system('rm -rf '.escapeshellarg(UPLOAD_PATH));
     mkdir(UPLOAD_PATH, 0755);
     // resp
     http_response_code(200);

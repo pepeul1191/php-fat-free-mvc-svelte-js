@@ -89,6 +89,7 @@ var AppView = Backbone.View.extend({
               code: dataArray[5],
               subject: dataArray[6],
             });
+            // console.log(student)
             _this.students.add(student);  
           }
           i++;
@@ -152,7 +153,7 @@ var AppView = Backbone.View.extend({
       `;
       var i = 0;
       this.students.forEach(student => {
-        console.log(student)
+        // console.log(student)
         tbody += `
           <tr model-id="${student.get('id')}">
             <th>${++i}</th>
@@ -178,8 +179,6 @@ var AppView = Backbone.View.extend({
           <th scope="col">Nombres</th>
           <th scope="col">Correo</th>
           <th scope="col">Asunto</th>
-          <th scope="col">Acciones</th>
-          <th scope="col">Resultado</th>
         </tr>
       </thead>
       <tbody>
@@ -308,6 +307,7 @@ var AppView = Backbone.View.extend({
       var _this = this;
       var form_data = new FormData();
       form_data.append('pdf_file', _this.basePDF);
+      form_data.append('data', JSON.stringify(_this.students))
       $.ajax({
         type: 'POST',
         url: BASE_URL + 'student/upload',
@@ -364,6 +364,7 @@ var AppView = Backbone.View.extend({
         $(".btn-resend").prop("disabled", true);
       },
       success: function(data) {
+        console.log(data);
         window.open(STATIC_URL + data, '_blank');
         $("#btnSend").prop("disabled", false);
         $(".btn-resend").prop("disabled", false);

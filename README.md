@@ -27,3 +27,5 @@ Fuentes:
 + https://fatfreeframework.com/3.7/quick-reference
 + https://stackoverflow.com/questions/40510806/php-return-data-from-anonymous-in-file
 + https://github.com/pepeul1191/slimphp-boilerplate
++ https://www.hostinger.es/tutoriales/como-usar-el-servidor-smtp-gmail-gratuito/
++ https://support.google.com/accounts/answer/185833?hl=es (contraseña de aplicaciones)
