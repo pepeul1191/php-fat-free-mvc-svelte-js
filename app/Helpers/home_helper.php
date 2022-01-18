@@ -14,7 +14,10 @@ function stylesheetsHome($staticURL)
       break;
     case 'production':
       $stylesheets = [
-        $staticURL . 'build/bundle.app',
+        $staticURL .'bower_components/bootstrap/dist/css/bootstrap.min',
+        $staticURL .'bower_components/font-awesome/css/font-awesome.min',
+        $staticURL .'assets/css/constants',
+        $staticURL .'assets/css/styles',
       ];
       break;
     default:
@@ -38,8 +41,11 @@ function javascriptsHome($staticURL)
       break;
     case 'production':
       $javascripts = [
-        $staticURL . 'vendor/bootstrap/bootstrap.bundle.min',
-        $staticURL . 'build/bundle.app.min',
+        $staticURL . 'bower_components/jquery/dist/jquery.min',
+        $staticURL . 'bower_components/bootstrap/dist/js/bootstrap.min',
+        $staticURL . 'bower_components/underscore/underscore-min',
+        $staticURL . 'bower_components/backbone/backbone-min',
+        $staticURL . 'assets/js/app',
       ];
       break;
     default:
